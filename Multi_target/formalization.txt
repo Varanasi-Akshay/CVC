@@ -1,0 +1,48 @@
+
+We want to create rectangular bounding boxes around features of interest.
+We want to classify the contents of a rectangle into classes and a set of labels.
+
+This splits into two problems: a sampling scheme for rectangles, and a classification problem.
+
+-----------------------------------------------------------------------------
+
+To train our classifier, we want to learn parameters X so that for any input 
+
+A: R^(n x m) n data points in R^m
+X: R^(m x k) m coefficients used to classify in k categories
+T: R^(n x k) target classification of each data point in k categories
+
+Want to learn X such that AX = T
+Then for a test data point v, we compute vX (in R^(1 x k)) to classify
+
+The issue is, our input data is rectangles of several sizes. This data does not immediately fit into R^m
+
+So we want a function f: matrices -> R^m that will map our rectangles into vectors.
+
+
+For n input rectangles (v1...vn)
+We create a matrix
+	A = [--- f(v1) ---]
+	    [--- f(v2) ---]
+	    [     ...     ]
+	    [--- f(vn) ---]
+
+We take the ground truth classification of the training data and create the target matrix T
+
+	T_ij = class_j(v_i)
+	where class_j(v) is the classification of v in category j
+	category 1 will denote whether the data point represents a feature of interest
+
+We then solve for X in AX=T (most likely over-constrained, approximate)
+
+For a test rectangle y, we can then compute t_y = f(y)X
+	which is our classification
+
+----------------------------------------------------------------------------
+
+To sample rectangles, we can select an epsilon of tolerance, as well as a max and min on height, width, and position
+We define R subset of R^4 (x, y, width, height) 
+
+We can then sample from R (uniformly? QMC?) so that two points are never within epsilon of each other to create a set of test rectangles S
+
+For each sample s in S, we evaluate t_s as above. If t_s[0] denotes that the rectangle does not represent a feature of interest, we discard. Otherwise we add it to our output set with labels t_s

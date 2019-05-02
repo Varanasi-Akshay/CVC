@@ -1,7 +1,7 @@
 % The demo below is for wavelets
 clc;clear;close all
 %load('Shepp-Logan.mat') % test image, 1024 by 1024
-addpath('/home/akshay/Downloads/Multitarget/Codes/Multi-level_Sampling/spgl1-1.9')
+addpath('/home/akshay/Desktop/CVC/Multi_target/Code/Multi-level_Sampling/spgl1-1.9')
 
 img = imread('10-12813-01-2.bmp');
 img_gray = rgb2gray(img);
@@ -13,7 +13,7 @@ I = I_full(1:512,1:512)/255;
 %for i=1:8
    
 %% Step 1: through trail and error, find a sparse approximation of the image in the wavelet domain
-level = 2;
+level = 3;
 per = 0.03;
 [II,S] = sparse_approx(I,level,per);
 PSNR21 = psnr(II,I); % model error
@@ -104,4 +104,13 @@ error13_inf = norm(I-III,'inf')/norm(I,'inf')*100;
 imtool(I)
 imtool(II)
 imtool(III)
+
+% MulitWavelet plot
+[C,S] = wavedec2(I,level,'haar');
+    
+plotwavelet2(C,S,level,'haar',255,'square')
+
+%% Finding no.of samples at each level
+sample=zeros(512,512);
+sample(pos)=1;
 

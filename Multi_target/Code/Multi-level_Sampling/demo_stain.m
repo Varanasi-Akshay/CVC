@@ -112,5 +112,5 @@ plotwavelet2(C,S,level,'haar',255,'square')
 
 %% Finding no.of samples at each level
 sample=zeros(512,512);
-sample(pos)=1;
+sample(IND)=1;s
 

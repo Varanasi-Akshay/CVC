@@ -13,7 +13,7 @@ I = I_full(1:512,1:512)/255;
 %for i=1:8
    
 %% Step 1: through trail and error, find a sparse approximation of the image in the wavelet domain
-level = 3;
+level = 8;
 per = 0.03;
 [II,S] = sparse_approx(I,level,per);
 PSNR21 = psnr(II,I); % model error
@@ -22,7 +22,7 @@ PSNR21 = psnr(II,I); % model error
 [n1,n2] = size(I);
 N = n1*n2;
 m = floor(per*N);
-const = 6;
+const = 1;
 M = const*m;
 
 c = 3; % 1 - uniform, 2 - Fourier+wavelet, 3 - Hadamard+wavelet
@@ -44,7 +44,7 @@ switch c
         scheme = uniform_rect_samp_scheme(n1,n2,M);
         pos = random_rect_subsamp(scheme);
         IND = sub2ind([n1,n2],pos(:,1),pos(:,2));
-        IND = sort(IND);
+        IND = sort(IND); % Note this has repetitions
 end
 
 
@@ -101,16 +101,39 @@ error13_inf = norm(I-III,'inf')/norm(I,'inf')*100;
 % imshow(uint8(III))
 
 %%% If value is scaled between 0-1
-imtool(I)
-imtool(II)
-imtool(III)
+% imtool(I)
+% imtool(II)
+% imtool(III)
 
 % MulitWavelet plot
 [C,S] = wavedec2(I,level,'haar');
-    
-plotwavelet2(C,S,level,'haar',255,'square')
+   
+dec=plotwavelet2(C,S,level,'haar',255,'square');
 
 %% Finding no.of samples at each level
-sample=zeros(512,512);
-sample(IND)=1;s
+
+% showing the sampling pattern
+sample=zeros(size(I));
+sample(IND)=1;
+imshow(sample)
+
+% Finding no.of samples at each level
+max_level=log2(size(I,1));
+sample_level=zeros(level,1);
+for i=1:level
+    count=nnz(sample(1:2^(max_level-level+i),1:2^(max_level-level+i)));
+    sample_count = count-sum(sample_level);
+    sample_level(i) = sample_count;
+end
+
+coeff=dec{1}/255;
+
+% showing the sparsity
+% Finding no.of coeff at each level
+coeff_level=zeros(level,1);
+for i=1:level
+    coeff_count=nnz(coeff(1:2^(max_level-level+i),1:2^(max_level-level+i)));
+    coeff_count = coeff_count-sum(coeff_level);
+    coeff_level(i) = coeff_count;
+end
 

@@ -1,4 +1,4 @@
-function plotwavelet2(C,S,level,wavelet,rv,mode)
+function [dec]=plotwavelet2(C,S,level,wavelet,rv,mode)
 
 %   Plot wavelet image (2D) decomposition.
 %   A short and simple function for displaying wavelet image decomposition

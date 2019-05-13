@@ -75,6 +75,6 @@ for i=2:length(scheme)
 end    
 
 plot(psnr_values)
-
+imtool close all
 
 

@@ -1,6 +1,7 @@
 % The demo below is for wavelets
 clc;clear;close all;imtool close all;
-%load('Shepp-Logan.mat') % test image, 1024 by 1024
+
+% add the path to the solver
 addpath('/home/akshay/Desktop/CVC/Multi_target/Code/Multi-level_Sampling/spgl1-1.9')
 
 img = imread('10-12813-01-2.bmp');
@@ -47,7 +48,7 @@ M = const*m;
 
 c = 3; % 1 - uniform, 2 - Fourier+wavelet, 3 - Hadamard+wavelet
 scheme = uniform_rect_samp_scheme(n1,n2,M);
-sample_level=cell(level);
+sample_level={};
 % using samples of that level only
 for i=2:length(scheme) % since 1st value in schema should be 4 always
     temp_scheme=zeros(size(scheme));
@@ -81,6 +82,8 @@ for i=2:length(scheme) % since 1st value in schema should be 4 always
 end    
 
 plot(psnr_values)
+xlabel('Levels')
+ylabel('PSNR')  
 imtool close all
 
 

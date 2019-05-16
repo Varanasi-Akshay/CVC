@@ -22,19 +22,25 @@ PSNR21 = psnr(II,I);
 [n1,n2] = size(I);
 N = n1*n2;
 m = floor(per*N);
-const = 6;
+const = 3;
 M = const*m;
 
 c = 3; % 1 - uniform, 2 - Fourier+wavelet, 3 - Hadamard+wavelet
 scheme = uniform_rect_samp_scheme(n1,n2,M);
 
 temp_scheme=zeros(size(scheme));
-    %temp_scheme(1)=4;
-temp_scheme(1:8)=scheme(1:8);
-temp_scheme(8)= temp_scheme(8) + scheme(9)+10000;
+temp_scheme(1:9)=scheme(1:9);
+%temp_scheme(8)= temp_scheme(8) + scheme(9)+10000;
 pos = random_rect_subsamp(temp_scheme);
 IND = sub2ind([n1,n2],pos(:,1),pos(:,2));
 IND = sort(IND);
+
+Sample=zeros(size(I));
+Sample(IND)=1;
+
+
+
+
 sample_level=sample_level_count(I,IND,level);
 b = fwht2(I);
 b = b(IND)*sqrt(n1*n2);

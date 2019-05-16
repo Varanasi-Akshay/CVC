@@ -3,6 +3,7 @@ clc;clear;close all;imtool close all;
 %load('Shepp-Logan.mat') % test image, 1024 by 1024
 addpath('/home/akshay/Desktop/CVC/Multi_target/Code/Multi-level_Sampling/spgl1-1.9')
 
+%img = imread('/home/akshay/Desktop/Data/KIMIAPath24RGB_zip/KIMIAPath24 RGB/Training/s0/42.jpg');
 img = imread('10-12813-01-2.bmp');
 img_gray = rgb2gray(img);
 I_full = double(img_gray);

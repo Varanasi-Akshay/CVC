@@ -22,7 +22,7 @@ PSNR21 = psnr(II,I); % model error
 [n1,n2] = size(I);
 N = n1*n2;
 m = floor(per*N);
-const = 1;
+const = 6;
 M = const*m;
 
 c = 3; % 1 - uniform, 2 - Fourier+wavelet, 3 - Hadamard+wavelet

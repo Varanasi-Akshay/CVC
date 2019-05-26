@@ -1,0 +1,32 @@
+This directory contains the Matlab(TM) code and natural image data to
+reproduce most of the experiments on in chapters 1-11 and Section 13.1 
+of the book "Natural Image Statistics" by Hyvarinen, Hurri, and Hoyer, 
+published by Springer.
+Code by Aapo Hyvarinen partly based on code by Patrik O. Hoyer 
+  and rotavg.m code courtesy of Bruno Olshausen
+This is version 1.0, 11 Dec 2008
+
+MAIN FILE: figures.m 
+  Running this file will do all the main experiments
+
+DATA DIRECTORY: data/
+  This directory contains the natural images used in the experiments
+
+SAMPLING: sampleimages.m  
+  Sample patches from images in directory "data"
+
+PREPROCESSING: removeDC.m      
+  Remove DC from image patches
+  Note: there is no single command for whitening the data, see figures.m
+        on how to use the results from pca.m to whiten your data
+  
+MAIN ALGORITHMS:
+ pca.m     %principal component analysis
+ ica.m     %FastICA for whitened data
+ isa_est.m %estimation of ISA model for whitened data
+ tica.m    %estimation of topographic ICA for whitened data
+ overcomplete.m %estimation of energy-based overcomplete model for whitened data
+
+
+OTHER FILES:
+ subroutines of the above, including plotting and terminal reporting commands.

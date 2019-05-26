@@ -5,7 +5,7 @@ function [Ar]=sketch(A,k,s,r)
 
 % Random Projections or test matrices
 Gamma = rand(k,m)/sqrt(k);
-Omega = rand(k,n)/sqrt();
+Omega = rand(k,n)/sqrt(k);
 Phi = rand(s,m)/sqrt(m);
 Psi = rand(s,n)/sqrt(n);
 

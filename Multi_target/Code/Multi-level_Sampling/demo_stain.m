@@ -112,28 +112,28 @@ dec=plotwavelet2(C,S,level,'haar',255,'square');
 
 %% Finding no.of samples at each level
 
-% showing the sampling pattern
-sample=zeros(size(I));
-sample(IND)=1;
-imshow(sample)
-
-% Finding no.of samples at each level
-max_level=log2(size(I,1));
-sample_level=zeros(level,1);
-for i=1:level
-    count=nnz(sample(1:2^(max_level-level+i),1:2^(max_level-level+i)));
-    sample_count = count-sum(sample_level);
-    sample_level(i) = sample_count;
-end
-
-coeff=dec{1}/255;
-
-% showing the sparsity
-% Finding no.of coeff at each level
-coeff_level=zeros(level,1);
-for i=1:level
-    coeff_count=nnz(coeff(1:2^(max_level-level+i),1:2^(max_level-level+i)));
-    coeff_count = coeff_count-sum(coeff_level);
-    coeff_level(i) = coeff_count;
-end
-
+% % showing the sampling pattern
+% sample=zeros(size(I));
+% sample(IND)=1;
+% imshow(sample)
+% 
+% % Finding no.of samples at each level
+% max_level=log2(size(I,1));
+% sample_level=zeros(level,1);
+% for i=1:level
+%     count=nnz(sample(1:2^(max_level-level+i),1:2^(max_level-level+i)));
+%     sample_count = count-sum(sample_level);
+%     sample_level(i) = sample_count;
+% end
+% 
+% coeff=dec{1}/255;
+% 
+% % showing the sparsity
+% % Finding no.of coeff at each level
+% coeff_level=zeros(level,1);
+% for i=1:level
+%     coeff_count=nnz(coeff(1:2^(max_level-level+i),1:2^(max_level-level+i)));
+%     coeff_count = coeff_count-sum(coeff_level);
+%     coeff_level(i) = coeff_count;
+% end
+% 

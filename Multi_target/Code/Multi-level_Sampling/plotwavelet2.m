@@ -73,7 +73,7 @@ elseif strcmp(mode,'square')
     for k = level-1:-1:1
         dec{k} = [imresize(dec{k+1},size(H{k})) H{k} ; V{k} D{k}];
     end
-    
+    figure
     imshow(dec{1}/255);
     %imtool(dec{1}/255)
     

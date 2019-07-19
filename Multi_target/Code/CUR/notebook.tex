@@ -1,0 +1,962 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{A3\_spring19}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \subsection{2. CUR decomposition}\label{cur-decomposition}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{numpy}\PY{n+nn}{.}\PY{n+nn}{linalg} \PY{k}{as} \PY{n+nn}{la}
+        \PY{k+kn}{import} \PY{n+nn}{numpy}\PY{n+nn}{.}\PY{n+nn}{random} \PY{k}{as} \PY{n+nn}{rn}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{k}{def} \PY{n+nf}{CUR\PYZus{}decomp}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{s}\PY{p}{,} \PY{n}{r}\PY{p}{)}\PY{p}{:}
+            \PY{c+c1}{\PYZsh{} Solve CUR decomposition}
+            
+            \PY{c+c1}{\PYZsh{} First compute probability}
+            \PY{n}{X\PYZus{}square} \PY{o}{=} \PY{n}{X}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}
+            \PY{n}{prob\PYZus{}col} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{X\PYZus{}square}\PY{p}{,}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+            \PY{n}{prob\PYZus{}row} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{X\PYZus{}square}\PY{p}{,}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+            \PY{n}{prob\PYZus{}col} \PY{o}{=} \PY{n}{prob\PYZus{}col}\PY{o}{/} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{prob\PYZus{}col}\PY{p}{)}
+            \PY{n}{prob\PYZus{}row} \PY{o}{=} \PY{n}{prob\PYZus{}row}\PY{o}{/} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{prob\PYZus{}row}\PY{p}{)}
+            \PY{n}{prob\PYZus{}col\PYZus{}cumsum} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{cumsum}\PY{p}{(}\PY{n}{prob\PYZus{}col}\PY{p}{)}
+            \PY{n}{prob\PYZus{}row\PYZus{}cumsum} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{cumsum}\PY{p}{(}\PY{n}{prob\PYZus{}row}\PY{p}{)}
+            \PY{c+c1}{\PYZsh{}print(prob\PYZus{}row\PYZus{}cumsum)}
+            
+            
+            \PY{c+c1}{\PYZsh{} Second sample R and C}
+            \PY{n}{id\PYZus{}col} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n}{s}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{int}\PY{p}{)}
+            \PY{n}{id\PYZus{}row} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n}{r}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{int}\PY{p}{)}
+            
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{s}\PY{p}{)}\PY{p}{:}
+                \PY{n}{p} \PY{o}{=} \PY{n}{rn}\PY{o}{.}\PY{n}{rand}\PY{p}{(}\PY{p}{)}
+                \PY{c+c1}{\PYZsh{}x = np.where(prob\PYZus{}col\PYZus{}cumsum\PYZgt{}=p)}
+                \PY{n}{id\PYZus{}col}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{where}\PY{p}{(}\PY{n}{prob\PYZus{}col\PYZus{}cumsum}\PY{o}{\PYZgt{}}\PY{o}{=}\PY{n}{p}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+                
+            \PY{n}{id\PYZus{}col} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{n}{id\PYZus{}col}\PY{p}{)}
+            \PY{n}{C} \PY{o}{=} \PY{n}{X}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{id\PYZus{}col}\PY{p}{]}\PY{o}{/}\PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{s} \PY{o}{*} \PY{n}{prob\PYZus{}col}\PY{p}{[}\PY{k+kc}{None}\PY{p}{,}\PY{n}{id\PYZus{}col}\PY{p}{]}\PY{p}{)}
+            
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{r}\PY{p}{)}\PY{p}{:}
+                \PY{n}{p} \PY{o}{=} \PY{n}{rn}\PY{o}{.}\PY{n}{rand}\PY{p}{(}\PY{p}{)}
+                \PY{n}{id\PYZus{}row}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{where}\PY{p}{(}\PY{n}{prob\PYZus{}row\PYZus{}cumsum}\PY{o}{\PYZgt{}}\PY{o}{=}\PY{n}{p}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+            \PY{n}{id\PYZus{}row} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{n}{id\PYZus{}row}\PY{p}{)}
+            \PY{n}{R} \PY{o}{=} \PY{n}{X}\PY{p}{[}\PY{n}{id\PYZus{}row}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{o}{/}\PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{r} \PY{o}{*} \PY{n}{prob\PYZus{}row}\PY{p}{[}\PY{n}{id\PYZus{}row}\PY{p}{,}\PY{k+kc}{None}\PY{p}{]}\PY{p}{)}
+            
+            \PY{c+c1}{\PYZsh{} Solve U = C\PYZca{}(\PYZhy{}1)*X*R\PYZca{}(\PYZhy{}1)}
+            \PY{n}{U} \PY{o}{=} \PY{n}{la}\PY{o}{.}\PY{n}{pinv}\PY{p}{(}\PY{n}{C}\PY{p}{)} \PY{o}{@} \PY{n}{X} \PY{o}{@} \PY{n}{la}\PY{o}{.}\PY{n}{pinv}\PY{p}{(}\PY{n}{R}\PY{p}{)}
+            \PY{k}{return} \PY{n}{C}\PY{p}{,} \PY{n}{U}\PY{p}{,} \PY{n}{R}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{k}{def} \PY{n+nf}{rgb2gray}\PY{p}{(}\PY{n}{rgb}\PY{p}{)}\PY{p}{:}
+            \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{rgb}\PY{p}{[}\PY{o}{.}\PY{o}{.}\PY{o}{.}\PY{p}{,}\PY{p}{:}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mf}{0.299}\PY{p}{,} \PY{l+m+mf}{0.587}\PY{p}{,} \PY{l+m+mf}{0.114}\PY{p}{]}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{}img = plt.imread(\PYZdq{}test\PYZus{}image.png\PYZdq{})}
+        \PY{n}{img} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{imread}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{10\PYZhy{}12813\PYZhy{}01\PYZhy{}2.bmp}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{gray\PYZus{}img} \PY{o}{=} \PY{n}{rgb2gray}\PY{p}{(}\PY{n}{img}\PY{p}{)}   
+        \PY{n}{plt}\PY{o}{.}\PY{n}{clf}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{gray\PYZus{}img}\PY{p}{,}\PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+        
+        
+        \PY{n}{C}\PY{p}{,} \PY{n}{U}\PY{p}{,} \PY{n}{R} \PY{o}{=} \PY{n}{CUR\PYZus{}decomp}\PY{p}{(}\PY{n}{gray\PYZus{}img}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{clf}\PY{p}{(}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{C} \PY{o}{@} \PY{n}{U} \PY{o}{@} \PY{n}{R}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} print(\PYZdq{}L2\PYZus{}norm error \PYZob{}\PYZcb{}\PYZpc{}\PYZdq{}.format(la.norm(gray\PYZus{}img \PYZhy{}( C @ U @ R),2)/la.norm(gray\PYZus{}img,2)*100))}
+        \PY{c+c1}{\PYZsh{} print(\PYZdq{}Nuclear\PYZus{}norm error \PYZob{}\PYZcb{}\PYZpc{}\PYZdq{}.format(la.norm(gray\PYZus{}img \PYZhy{} (C @ U @ R),\PYZsq{}nuc\PYZsq{})/la.norm(gray\PYZus{}img,\PYZsq{}nuc\PYZsq{})*100))}
+        \PY{c+c1}{\PYZsh{} print(\PYZdq{}Frobenius\PYZus{}norm error \PYZob{}\PYZcb{}\PYZpc{}\PYZdq{}.format(la.norm(gray\PYZus{}img \PYZhy{} (C @ U @ R),\PYZsq{}fro\PYZsq{})/la.norm(gray\PYZus{}img,\PYZsq{}fro\PYZsq{})*100))}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_3_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_3_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k}{def} \PY{n+nf}{CUR\PYZus{}decomp\PYZus{}primitive}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{s}\PY{p}{,} \PY{n}{r}\PY{p}{)}\PY{p}{:}
+            \PY{c+c1}{\PYZsh{} Solve CUR decomposition}
+            
+            \PY{c+c1}{\PYZsh{} First compute probability}
+            \PY{n}{X\PYZus{}square} \PY{o}{=} \PY{n}{X}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}
+            \PY{n}{prob\PYZus{}col} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{X\PYZus{}square}\PY{p}{,}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+            \PY{n}{prob\PYZus{}row} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{X\PYZus{}square}\PY{p}{,}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+            \PY{n}{prob\PYZus{}col} \PY{o}{=} \PY{n}{prob\PYZus{}col}\PY{o}{/} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{prob\PYZus{}col}\PY{p}{)}
+            \PY{n}{prob\PYZus{}row} \PY{o}{=} \PY{n}{prob\PYZus{}row}\PY{o}{/} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{prob\PYZus{}row}\PY{p}{)}
+            \PY{n}{prob\PYZus{}col\PYZus{}cumsum} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{cumsum}\PY{p}{(}\PY{n}{prob\PYZus{}col}\PY{p}{)}
+            \PY{n}{prob\PYZus{}row\PYZus{}cumsum} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{cumsum}\PY{p}{(}\PY{n}{prob\PYZus{}row}\PY{p}{)}
+            
+            \PY{c+c1}{\PYZsh{} Second sample R and C}
+            \PY{n}{id\PYZus{}col} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n}{s}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{int}\PY{p}{)}
+            \PY{n}{id\PYZus{}row} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n}{r}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{int}\PY{p}{)}
+            
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{s}\PY{p}{)}\PY{p}{:}
+                \PY{n}{p} \PY{o}{=} \PY{n}{rn}\PY{o}{.}\PY{n}{rand}\PY{p}{(}\PY{p}{)}
+                \PY{n}{id\PYZus{}col}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{where}\PY{p}{(}\PY{n}{prob\PYZus{}col\PYZus{}cumsum}\PY{o}{\PYZgt{}}\PY{o}{=}\PY{n}{p}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+            \PY{n}{id\PYZus{}col} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{n}{id\PYZus{}col}\PY{p}{)}
+            \PY{n}{C} \PY{o}{=} \PY{n}{X}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{id\PYZus{}col}\PY{p}{]}\PY{o}{/}\PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{s} \PY{o}{*} \PY{n}{prob\PYZus{}col}\PY{p}{[}\PY{k+kc}{None}\PY{p}{,}\PY{n}{id\PYZus{}col}\PY{p}{]}\PY{p}{)}
+            
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{r}\PY{p}{)}\PY{p}{:}
+                \PY{n}{p} \PY{o}{=} \PY{n}{rn}\PY{o}{.}\PY{n}{rand}\PY{p}{(}\PY{p}{)}
+                \PY{n}{id\PYZus{}row}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{where}\PY{p}{(}\PY{n}{prob\PYZus{}row\PYZus{}cumsum}\PY{o}{\PYZgt{}}\PY{o}{=}\PY{n}{p}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+            \PY{n}{id\PYZus{}row} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{n}{id\PYZus{}row}\PY{p}{)}
+            \PY{n}{R} \PY{o}{=} \PY{n}{X}\PY{p}{[}\PY{n}{id\PYZus{}row}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{o}{/}\PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{r} \PY{o}{*} \PY{n}{prob\PYZus{}row}\PY{p}{[}\PY{n}{id\PYZus{}row}\PY{p}{,}\PY{k+kc}{None}\PY{p}{]}\PY{p}{)}
+            
+            
+            \PY{n}{Psi} \PY{o}{=} \PY{n}{R}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{id\PYZus{}col}\PY{p}{]}\PY{o}{.}\PY{n}{T}\PY{o}{/}\PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{s} \PY{o}{*} \PY{n}{prob\PYZus{}row}\PY{p}{[}\PY{n}{id\PYZus{}col}\PY{p}{,}\PY{k+kc}{None}\PY{p}{]}\PY{p}{)}
+            \PY{n}{k} \PY{o}{=} \PY{n+nb}{min}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{matrix\PYZus{}rank}\PY{p}{(}\PY{n}{R} \PY{o}{@} \PY{n}{R}\PY{o}{.}\PY{n}{T}\PY{p}{,}\PY{n}{tol}\PY{o}{=}\PY{l+m+mf}{1e\PYZhy{}3}\PY{p}{)}\PY{p}{,}\PY{n}{r}\PY{p}{)}
+            \PY{n}{u}\PY{p}{,} \PY{n}{s}\PY{p}{,} \PY{n}{vt} \PY{o}{=}  \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{svd}\PY{p}{(}\PY{n}{R} \PY{o}{@} \PY{n}{R}\PY{o}{.}\PY{n}{T}\PY{p}{)}
+            \PY{n}{sinv} \PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n}{s}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+            \PY{n}{idx} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{argsort}\PY{p}{(}\PY{n}{s}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{k}\PY{p}{)}\PY{p}{:}
+                \PY{k}{if} \PY{n}{s}\PY{p}{[}\PY{n}{idx}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{]}\PY{o}{\PYZlt{}}\PY{l+m+mf}{1e\PYZhy{}3}\PY{p}{:}
+                    \PY{n}{sinv}\PY{p}{[}\PY{n}{idx}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{]}\PY{o}{=}\PY{l+m+mi}{0}
+                \PY{k}{else}\PY{p}{:}
+                    \PY{n}{sinv}\PY{p}{[}\PY{n}{idx}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{]}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{o}{/}\PY{n}{s}\PY{p}{[}\PY{n}{idx}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{]}
+            \PY{n}{RRTinv} \PY{o}{=} \PY{n}{u} \PY{o}{@} \PY{n}{np}\PY{o}{.}\PY{n}{diag}\PY{p}{(}\PY{n}{sinv}\PY{p}{)} \PY{o}{@} \PY{n}{vt}
+            \PY{n}{U} \PY{o}{=} \PY{n}{Psi} \PY{o}{@} \PY{n}{RRTinv}
+            \PY{k}{return} \PY{n}{C}\PY{p}{,} \PY{n}{U}\PY{p}{,} \PY{n}{R}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}73}]:} \PY{c+c1}{\PYZsh{} C, U, R = CUR\PYZus{}decomp\PYZus{}primitive(gray\PYZus{}img, 100, 100)}
+         \PY{c+c1}{\PYZsh{} plt.clf()}
+         \PY{c+c1}{\PYZsh{} plt.imshow(C @ U @ R, cmap=\PYZsq{}gray\PYZsq{})}
+         \PY{c+c1}{\PYZsh{} plt.show()}
+         
+         
+         \PY{c+c1}{\PYZsh{} print(\PYZdq{}L2\PYZus{}norm error \PYZob{}\PYZcb{}\PYZpc{}\PYZdq{}.format(la.norm(gray\PYZus{}img \PYZhy{}( C @ U @ R),2)/la.norm(gray\PYZus{}img,2)*100))}
+         \PY{c+c1}{\PYZsh{} print(\PYZdq{}Nuclear\PYZus{}norm error \PYZob{}\PYZcb{}\PYZpc{}\PYZdq{}.format(la.norm(gray\PYZus{}img \PYZhy{} (C @ U @ R),\PYZsq{}nuc\PYZsq{})/la.norm(gray\PYZus{}img,\PYZsq{}nuc\PYZsq{})*100))}
+         \PY{c+c1}{\PYZsh{} print(\PYZdq{}Frobenius\PYZus{}norm error \PYZob{}\PYZcb{}\PYZpc{}\PYZdq{}.format(la.norm(gray\PYZus{}img \PYZhy{} (C @ U @ R),\PYZsq{}fro\PYZsq{})/la.norm(gray\PYZus{}img,\PYZsq{}fro\PYZsq{})*100))}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{k}{def} \PY{n+nf}{CUR\PYZus{}decomp\PYZus{}primitive\PYZus{}column}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{s}\PY{p}{,} \PY{n}{r}\PY{p}{)}\PY{p}{:}
+            \PY{c+c1}{\PYZsh{} Solve CUR decomposition}
+            
+            \PY{c+c1}{\PYZsh{} First compute probability}
+            \PY{n}{X\PYZus{}square} \PY{o}{=} \PY{n}{X}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}
+            \PY{n}{prob\PYZus{}col} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{X\PYZus{}square}\PY{p}{,}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+            \PY{n}{prob\PYZus{}row} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{X\PYZus{}square}\PY{p}{,}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+            \PY{n}{prob\PYZus{}col} \PY{o}{=} \PY{n}{prob\PYZus{}col}\PY{o}{/} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{prob\PYZus{}col}\PY{p}{)}
+            \PY{n}{prob\PYZus{}row} \PY{o}{=} \PY{n}{prob\PYZus{}row}\PY{o}{/} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{prob\PYZus{}row}\PY{p}{)}
+            \PY{n}{prob\PYZus{}col\PYZus{}cumsum} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{cumsum}\PY{p}{(}\PY{n}{prob\PYZus{}col}\PY{p}{)}
+            \PY{n}{prob\PYZus{}row\PYZus{}cumsum} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{cumsum}\PY{p}{(}\PY{n}{prob\PYZus{}row}\PY{p}{)}
+            
+            
+            \PY{c+c1}{\PYZsh{} Second sample R and C}
+            \PY{n}{id\PYZus{}col} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n}{s}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{int}\PY{p}{)}
+            \PY{n}{id\PYZus{}row} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n}{r}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{int}\PY{p}{)}
+            
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{s}\PY{p}{)}\PY{p}{:}
+                \PY{n}{p} \PY{o}{=} \PY{n}{rn}\PY{o}{.}\PY{n}{rand}\PY{p}{(}\PY{p}{)}
+                \PY{n}{id\PYZus{}col}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{where}\PY{p}{(}\PY{n}{prob\PYZus{}col\PYZus{}cumsum}\PY{o}{\PYZgt{}}\PY{o}{=}\PY{n}{p}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+            \PY{n}{id\PYZus{}col} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{n}{id\PYZus{}col}\PY{p}{)}
+            \PY{n}{C} \PY{o}{=} \PY{n}{X}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{id\PYZus{}col}\PY{p}{]}\PY{o}{/}\PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{s} \PY{o}{*} \PY{n}{prob\PYZus{}col}\PY{p}{[}\PY{k+kc}{None}\PY{p}{,}\PY{n}{id\PYZus{}col}\PY{p}{]}\PY{p}{)}
+            
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{r}\PY{p}{)}\PY{p}{:}
+                \PY{n}{p} \PY{o}{=} \PY{n}{rn}\PY{o}{.}\PY{n}{rand}\PY{p}{(}\PY{p}{)}
+                \PY{n}{id\PYZus{}row}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{where}\PY{p}{(}\PY{n}{prob\PYZus{}row\PYZus{}cumsum}\PY{o}{\PYZgt{}}\PY{o}{=}\PY{n}{p}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+            \PY{n}{id\PYZus{}row} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{n}{id\PYZus{}row}\PY{p}{)}
+            \PY{n}{R} \PY{o}{=} \PY{n}{X}\PY{p}{[}\PY{n}{id\PYZus{}row}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{o}{/}\PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{r} \PY{o}{*} \PY{n}{prob\PYZus{}row}\PY{p}{[}\PY{n}{id\PYZus{}row}\PY{p}{,}\PY{k+kc}{None}\PY{p}{]}\PY{p}{)}
+            
+            \PY{n}{Psi} \PY{o}{=}\PY{n}{C}\PY{p}{[}\PY{n}{id\PYZus{}row}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{o}{.}\PY{n}{T}\PY{o}{/}\PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{r} \PY{o}{*} \PY{n}{prob\PYZus{}row}\PY{p}{[}\PY{k+kc}{None}\PY{p}{,} \PY{n}{id\PYZus{}row}\PY{p}{]}\PY{p}{)}
+            \PY{n}{k} \PY{o}{=} \PY{n+nb}{min}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{matrix\PYZus{}rank}\PY{p}{(}\PY{n}{C}\PY{o}{.}\PY{n}{T} \PY{o}{@} \PY{n}{C}\PY{p}{,}\PY{n}{tol}\PY{o}{=}\PY{l+m+mf}{1e\PYZhy{}3}\PY{p}{)}\PY{p}{,}\PY{n}{r}\PY{p}{)}
+            \PY{n}{u}\PY{p}{,} \PY{n}{s}\PY{p}{,} \PY{n}{vt} \PY{o}{=}  \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{svd}\PY{p}{(}\PY{n}{C}\PY{o}{.}\PY{n}{T} \PY{o}{@} \PY{n}{C}\PY{p}{)}
+            \PY{n}{sinv} \PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n}{s}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+            \PY{n}{idx} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{argsort}\PY{p}{(}\PY{n}{s}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{k}\PY{p}{)}\PY{p}{:}
+                \PY{k}{if} \PY{n}{s}\PY{p}{[}\PY{n}{idx}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{]}\PY{o}{\PYZlt{}}\PY{l+m+mf}{1e\PYZhy{}3}\PY{p}{:}
+                    \PY{n}{sinv}\PY{p}{[}\PY{n}{idx}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{]}\PY{o}{=}\PY{l+m+mi}{0}
+                \PY{k}{else}\PY{p}{:}
+                    \PY{n}{sinv}\PY{p}{[}\PY{n}{idx}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{]}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{o}{/}\PY{n}{s}\PY{p}{[}\PY{n}{idx}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{]}
+            \PY{n}{CTCinv} \PY{o}{=} \PY{n}{u} \PY{o}{@} \PY{n}{np}\PY{o}{.}\PY{n}{diag}\PY{p}{(}\PY{n}{sinv}\PY{p}{)} \PY{o}{@} \PY{n}{vt}
+        
+            \PY{n}{U} \PY{o}{=} \PY{n}{CTCinv} \PY{o}{@} \PY{n}{Psi}
+            \PY{k}{return} \PY{n}{C}\PY{p}{,} \PY{n}{U}\PY{p}{,} \PY{n}{R}
+\end{Verbatim}
+
+
+    For analysis of error, you can estimate \(\frac{\|A-CUR\|}{\|A\|}\) and
+try to let the error be less than \(10\%\). Below are one specific
+example. Based on choice of \(U\), there will be three possibilities.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{n}{C}\PY{p}{,} \PY{n}{U}\PY{p}{,} \PY{n}{R} \PY{o}{=} \PY{n}{CUR\PYZus{}decomp\PYZus{}primitive\PYZus{}column}\PY{p}{(}\PY{n}{gray\PYZus{}img}\PY{p}{,} \PY{l+m+mi}{200}\PY{p}{,} \PY{l+m+mi}{200}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{clf}\PY{p}{(}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{C} \PY{o}{@} \PY{n}{U} \PY{o}{@} \PY{n}{R}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+        
+        
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{L2\PYZus{}norm error }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{la}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{gray\PYZus{}img} \PY{o}{\PYZhy{}}\PY{p}{(} \PY{n}{C} \PY{o}{@} \PY{n}{U} \PY{o}{@} \PY{n}{R}\PY{p}{)}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{o}{/}\PY{n}{la}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{gray\PYZus{}img}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{p}{)}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Nuclear\PYZus{}norm error }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{la}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{gray\PYZus{}img} \PY{o}{\PYZhy{}} \PY{p}{(}\PY{n}{C} \PY{o}{@} \PY{n}{U} \PY{o}{@} \PY{n}{R}\PY{p}{)}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{nuc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{/}\PY{n}{la}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{gray\PYZus{}img}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{nuc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{p}{)}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Frobenius\PYZus{}norm error }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{la}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{gray\PYZus{}img} \PY{o}{\PYZhy{}} \PY{p}{(}\PY{n}{C} \PY{o}{@} \PY{n}{U} \PY{o}{@} \PY{n}{R}\PY{p}{)}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{fro}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{/}\PY{n}{la}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{gray\PYZus{}img}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{fro}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_8_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+L2\_norm error 93.93086122499155\%
+Nuclear\_norm error 90.83158998499663\%
+Frobenius\_norm error 94.19380930636433\%
+
+    \end{Verbatim}
+
+    For block CUR decomposition. You can try either sample in group or
+sample in each block. Here is one example of sample in block
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{k}{def} \PY{n+nf}{rgb2gray}\PY{p}{(}\PY{n}{rgb}\PY{p}{)}\PY{p}{:}
+            \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{rgb}\PY{p}{[}\PY{o}{.}\PY{o}{.}\PY{o}{.}\PY{p}{,}\PY{p}{:}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mf}{0.299}\PY{p}{,} \PY{l+m+mf}{0.587}\PY{p}{,} \PY{l+m+mf}{0.114}\PY{p}{]}\PY{p}{)}
+        \PY{n}{img} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{imread}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{test\PYZus{}image.png}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{gray\PYZus{}img} \PY{o}{=} \PY{n}{rgb2gray}\PY{p}{(}\PY{n}{img}\PY{p}{)}   
+        \PY{n}{plt}\PY{o}{.}\PY{n}{clf}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{gray\PYZus{}img}\PY{p}{,}\PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+        
+        \PY{n}{block\PYZus{}img} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n}{gray\PYZus{}img}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} 8 by 8 blocks with each block 64*64}
+        \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{8}\PY{p}{)}\PY{p}{:}
+            \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{8}\PY{p}{)}\PY{p}{:}
+                \PY{n}{part} \PY{o}{=} \PY{n}{gray\PYZus{}img}\PY{p}{[}\PY{n}{i}\PY{o}{*}\PY{l+m+mi}{64}\PY{p}{:}\PY{p}{(}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{64}\PY{p}{,}\PY{n}{j}\PY{o}{*}\PY{l+m+mi}{64}\PY{p}{:}\PY{p}{(}\PY{n}{j}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{64}\PY{p}{]}
+                \PY{n}{C}\PY{p}{,} \PY{n}{U}\PY{p}{,} \PY{n}{R} \PY{o}{=} \PY{n}{CUR\PYZus{}decomp}\PY{p}{(}\PY{n}{part}\PY{p}{,} \PY{l+m+mi}{12}\PY{p}{,} \PY{l+m+mi}{12}\PY{p}{)}
+                \PY{n}{block\PYZus{}img}\PY{p}{[}\PY{n}{i}\PY{o}{*}\PY{l+m+mi}{64}\PY{p}{:}\PY{p}{(}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{64}\PY{p}{,}\PY{n}{j}\PY{o}{*}\PY{l+m+mi}{64}\PY{p}{:}\PY{p}{(}\PY{n}{j}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{64}\PY{p}{]} \PY{o}{=} \PY{n}{C}\PY{n+nd}{@U}\PY{n+nd}{@R}
+                
+        \PY{n}{plt}\PY{o}{.}\PY{n}{clf}\PY{p}{(}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{block\PYZus{}img}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+        
+        
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{L2\PYZus{}norm error }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{la}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{gray\PYZus{}img} \PY{o}{\PYZhy{}}\PY{p}{(} \PY{n}{block\PYZus{}img}\PY{p}{)}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{o}{/}\PY{n}{la}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{gray\PYZus{}img}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{p}{)}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Nuclear\PYZus{}norm error }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{la}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{gray\PYZus{}img} \PY{o}{\PYZhy{}} \PY{p}{(}\PY{n}{block\PYZus{}img}\PY{p}{)}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{nuc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{/}\PY{n}{la}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{gray\PYZus{}img}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{nuc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{p}{)}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Frobenius\PYZus{}norm error }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{la}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{gray\PYZus{}img} \PY{o}{\PYZhy{}} \PY{p}{(}\PY{n}{block\PYZus{}img}\PY{p}{)}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{fro}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{/}\PY{n}{la}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{gray\PYZus{}img}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{fro}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+        ---------------------------------------------------------------------------
+
+        FileNotFoundError                         Traceback (most recent call last)
+
+        <ipython-input-8-266fcc540f5d> in <module>()
+          1 def rgb2gray(rgb):
+          2     return np.dot(rgb[{\ldots},:3], [0.299, 0.587, 0.114])
+    ----> 3 img = plt.imread("test\_image.png")
+          4 gray\_img = rgb2gray(img)
+          5 plt.clf
+
+
+        \textasciitilde{}/anaconda3/lib/python3.6/site-packages/matplotlib/pyplot.py in imread(*args, **kwargs)
+       2379 @docstring.copy\_dedent(\_imread)
+       2380 def imread(*args, **kwargs):
+    -> 2381     return \_imread(*args, **kwargs)
+       2382 
+       2383 
+
+
+        \textasciitilde{}/anaconda3/lib/python3.6/site-packages/matplotlib/image.py in imread(fname, format)
+       1373             return handler(fd)
+       1374         else:
+    -> 1375             with open(fname, 'rb') as fd:
+       1376                 return handler(fd)
+       1377     else:
+
+
+        FileNotFoundError: [Errno 2] No such file or directory: 'test\_image.png'
+
+    \end{Verbatim}
+
+    \subsection{4. Projection onto simplex and do gradient
+descent}\label{projection-onto-simplex-and-do-gradient-descent}
+
+Note it is enough to solve the projection via numerical method. In the
+code we chose Newton's method.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{k}{def} \PY{n+nf}{descent}\PY{p}{(}\PY{n}{input\PYZus{}data}\PY{p}{,} \PY{n}{loss\PYZus{}func}\PY{p}{,} \PY{n}{update}\PY{p}{,} \PY{n}{T}\PY{p}{,} \PY{o}{*}\PY{o}{*}\PY{n}{kwargs}\PY{p}{)}\PY{p}{:}
+             \PY{n}{x} \PY{o}{=} \PY{k+kc}{None}
+             \PY{n}{prev\PYZus{}x} \PY{o}{=} \PY{k+kc}{None}
+             \PY{n}{loss} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{n}{x\PYZus{}list} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{k}{if} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{momentum}\PY{l+s+s1}{\PYZsq{}} \PY{o+ow}{in} \PY{n}{kwargs}\PY{p}{:}
+                 \PY{n}{momentum} \PY{o}{=} \PY{n}{kwargs}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{momentum}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+             \PY{k}{else}\PY{p}{:}
+                 \PY{n}{momentum} \PY{o}{=} \PY{k+kc}{False}
+             \PY{n}{save\PYZus{}list} \PY{o}{=} \PY{n}{kwargs}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{save}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{k+kc}{True}\PY{p}{)}
+             \PY{c+c1}{\PYZsh{}loss\PYZus{}interval = kwargs.get(\PYZsq{}plot\PYZus{}interval\PYZsq{},1)}
+             \PY{k}{for} \PY{n}{t} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{p}{:}
+                 \PY{c+c1}{\PYZsh{}print(\PYZsq{}.\PYZsq{}, end=\PYZsq{}\PYZsq{},flush=True)}
+                 \PY{k}{if} \PY{n}{momentum} \PY{o+ow}{is} \PY{k+kc}{True}\PY{p}{:}
+                     \PY{n}{tmp} \PY{o}{=} \PY{n}{prev\PYZus{}x}
+                     \PY{n}{prev\PYZus{}x} \PY{o}{=} \PY{n}{x}
+                     \PY{n}{x} \PY{o}{=} \PY{n}{update}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{tmp}\PY{p}{,} \PY{n}{t}\PY{p}{,} \PY{n}{input\PYZus{}data}\PY{p}{,} \PY{o}{*}\PY{o}{*}\PY{n}{kwargs}\PY{p}{)}
+                 \PY{k}{else}\PY{p}{:}
+                     \PY{n}{x} \PY{o}{=} \PY{n}{update}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{t}\PY{p}{,} \PY{n}{input\PYZus{}data}\PY{p}{,} \PY{o}{*}\PY{o}{*}\PY{n}{kwargs}\PY{p}{)}
+                 \PY{k}{if} \PY{n}{t}\PY{o}{\PYZpc{}}\PY{k}{1}==0:
+                     \PY{n}{loss}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{loss\PYZus{}func}\PY{p}{(}\PY{n}{input\PYZus{}data}\PY{p}{,} \PY{n}{x}\PY{p}{,} \PY{o}{*}\PY{o}{*}\PY{n}{kwargs}\PY{p}{)}\PY{p}{)}
+                     \PY{k}{assert} \PY{o+ow}{not} \PY{n}{np}\PY{o}{.}\PY{n}{isnan}\PY{p}{(}\PY{n}{loss}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+                     \PY{k}{if} \PY{n}{save\PYZus{}list} \PY{o+ow}{or} \PY{n}{t}\PY{o}{==}\PY{n}{T}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{:}
+                         \PY{c+c1}{\PYZsh{}print(t)}
+                         \PY{n}{x\PYZus{}list}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+             \PY{k}{return} \PY{n}{x\PYZus{}list}\PY{p}{,} \PY{n}{loss} 
+         
+         \PY{c+c1}{\PYZsh{} update scheme (gradient descent)}
+         \PY{k}{def} \PY{n+nf}{PGD\PYZus{}update}\PY{p}{(}\PY{n}{beta}\PY{p}{,}\PY{n}{t}\PY{p}{,}\PY{n}{data}\PY{p}{,}\PY{o}{*}\PY{o}{*}\PY{n}{kwargs}\PY{p}{)}\PY{p}{:}
+             \PY{n}{eta} \PY{o}{=} \PY{n}{kwargs}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{eta}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+m+mf}{1e\PYZhy{}4}\PY{p}{)}
+             \PY{n}{X} \PY{o}{=} \PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{X}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+             \PY{n}{y} \PY{o}{=} \PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+             
+             \PY{k}{if} \PY{n}{beta} \PY{o+ow}{is} \PY{k+kc}{None}\PY{p}{:}
+                 \PY{c+c1}{\PYZsh{} proper initialization}
+                 \PY{n}{beta} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{ones}\PY{p}{(}\PY{n}{X}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{o}{/}\PY{n}{X}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+             
+             \PY{c+c1}{\PYZsh{} subgradient descent}
+             \PY{n}{alpha} \PY{o}{=} \PY{n}{beta} \PY{o}{\PYZhy{}} \PY{n}{eta}\PY{o}{*} \PY{n}{X}\PY{o}{.}\PY{n}{T} \PY{o}{@} \PY{p}{(}\PY{n}{X} \PY{o}{@} \PY{n}{beta} \PY{o}{\PYZhy{}} \PY{n}{y}\PY{p}{)}
+             
+             \PY{c+c1}{\PYZsh{} Use Newton\PYZsq{}s method to solve simplex projection problem}
+             \PY{n}{mu} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{n}{alpha}\PY{p}{)}
+             \PY{n}{T} \PY{o}{=}\PY{n}{kwargs}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{NewtonMaxIteration}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+m+mi}{20}\PY{p}{)}
+             \PY{n}{tolerance} \PY{o}{=} \PY{n}{kwargs}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{NewtonTolerance}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mf}{1e\PYZhy{}7}\PY{p}{)}
+             
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{obj} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{maximum}\PY{p}{(}\PY{n}{alpha}\PY{o}{\PYZhy{}} \PY{n}{mu}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+                 \PY{k}{if} \PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{obj}\PY{p}{)}\PY{o}{\PYZlt{}} \PY{n}{tolerance}\PY{p}{:}
+                     \PY{k}{break}
+                 \PY{n}{mu} \PY{o}{=} \PY{n}{mu} \PY{o}{\PYZhy{}} \PY{n}{obj} \PY{o}{/} \PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sign}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{minimum}\PY{p}{(}\PY{n}{mu} \PY{o}{\PYZhy{}} \PY{n}{alpha} \PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+                 
+             \PY{n}{beta} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{maximum}\PY{p}{(}\PY{n}{alpha}\PY{o}{\PYZhy{}} \PY{n}{mu}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}
+             \PY{k}{return} \PY{n}{beta}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{k+kn}{import} \PY{n+nn}{numpy}\PY{n+nn}{.}\PY{n+nn}{random} \PY{k}{as} \PY{n+nn}{rn}
+         \PY{n}{rn}\PY{o}{.}\PY{n}{seed}\PY{p}{(}\PY{l+m+mi}{9}\PY{p}{)}
+         \PY{n}{A} \PY{o}{=} \PY{n}{rn}\PY{o}{.}\PY{n}{rand}\PY{p}{(}\PY{l+m+mi}{1000}\PY{p}{,}\PY{l+m+mi}{500}\PY{p}{)}
+         \PY{n}{rn}\PY{o}{.}\PY{n}{seed}\PY{p}{(}\PY{l+m+mi}{9}\PY{p}{)}
+         \PY{n}{b} \PY{o}{=} \PY{n}{rn}\PY{o}{.}\PY{n}{rand}\PY{p}{(}\PY{l+m+mi}{1000}\PY{p}{)}
+         
+         \PY{n}{data}\PY{o}{=}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{X}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{A}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{b}\PY{p}{\PYZcb{}}
+         \PY{n}{plot\PYZus{}title}\PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{L2 loss}\PY{l+s+s2}{\PYZdq{}}
+         
+         \PY{c+c1}{\PYZsh{} default eta= 1e\PYZhy{}4}
+         \PY{n}{x\PYZus{}list}\PY{p}{,} \PY{n}{loss} \PY{o}{=} \PY{n}{descent}\PY{p}{(}\PY{n}{data}\PY{p}{,}\PY{n}{robust\PYZus{}regression\PYZus{}loss\PYZus{}L2}\PY{p}{,}\PY{n}{PGD\PYZus{}update}\PY{p}{,}\PY{l+m+mi}{1000}\PY{p}{)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{clf}\PY{p}{(}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{loss}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Projectied Gradient Descent}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{n}{plot\PYZus{}title}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+                     
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_13_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{from} \PY{n+nn}{numpy}\PY{n+nn}{.}\PY{n+nn}{linalg} \PY{k}{import} \PY{n}{norm}
+        
+        \PY{k+kn}{from} \PY{n+nn}{random} \PY{k}{import} \PY{n}{normalvariate}
+        \PY{k+kn}{from} \PY{n+nn}{math} \PY{k}{import} \PY{n}{sqrt}
+        
+        
+        \PY{k}{def} \PY{n+nf}{randomUnitVector}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
+            \PY{n}{unnormalized} \PY{o}{=} \PY{p}{[}\PY{n}{normalvariate}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)} \PY{k}{for} \PY{n}{\PYZus{}} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{]}
+            \PY{n}{theNorm} \PY{o}{=} \PY{n}{sqrt}\PY{p}{(}\PY{n+nb}{sum}\PY{p}{(}\PY{n}{x} \PY{o}{*} \PY{n}{x} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{unnormalized}\PY{p}{)}\PY{p}{)}
+            \PY{k}{return} \PY{p}{[}\PY{n}{x} \PY{o}{/} \PY{n}{theNorm} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{unnormalized}\PY{p}{]}
+        
+        
+        \PY{k}{def} \PY{n+nf}{svd\PYZus{}1d}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{epsilon}\PY{o}{=}\PY{l+m+mf}{1e\PYZhy{}10}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{} The one\PYZhy{}dimensional SVD \PYZsq{}\PYZsq{}\PYZsq{}}
+        
+            \PY{n}{n}\PY{p}{,} \PY{n}{m} \PY{o}{=} \PY{n}{A}\PY{o}{.}\PY{n}{shape}
+            \PY{n}{x} \PY{o}{=} \PY{n}{randomUnitVector}\PY{p}{(}\PY{n+nb}{min}\PY{p}{(}\PY{n}{n}\PY{p}{,}\PY{n}{m}\PY{p}{)}\PY{p}{)}
+            \PY{n}{lastV} \PY{o}{=} \PY{k+kc}{None}
+            \PY{n}{currentV} \PY{o}{=} \PY{n}{x}
+        
+            \PY{k}{if} \PY{n}{n} \PY{o}{\PYZgt{}} \PY{n}{m}\PY{p}{:}
+                \PY{n}{B} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{A}\PY{o}{.}\PY{n}{T}\PY{p}{,} \PY{n}{A}\PY{p}{)}
+            \PY{k}{else}\PY{p}{:}
+                \PY{n}{B} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{A}\PY{o}{.}\PY{n}{T}\PY{p}{)}
+        
+            \PY{n}{iterations} \PY{o}{=} \PY{l+m+mi}{0}
+            \PY{k}{while} \PY{k+kc}{True}\PY{p}{:}
+                \PY{n}{iterations} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                \PY{n}{lastV} \PY{o}{=} \PY{n}{currentV}
+                \PY{n}{currentV} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{B}\PY{p}{,} \PY{n}{lastV}\PY{p}{)}
+                \PY{n}{currentV} \PY{o}{=} \PY{n}{currentV} \PY{o}{/} \PY{n}{norm}\PY{p}{(}\PY{n}{currentV}\PY{p}{)}
+        
+                \PY{k}{if} \PY{n+nb}{abs}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{currentV}\PY{p}{,} \PY{n}{lastV}\PY{p}{)}\PY{p}{)} \PY{o}{\PYZgt{}} \PY{l+m+mi}{1} \PY{o}{\PYZhy{}} \PY{n}{epsilon}\PY{p}{:}
+                    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{converged in }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{ iterations!}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{iterations}\PY{p}{)}\PY{p}{)}
+                    \PY{k}{return} \PY{n}{currentV}
+        
+        
+        \PY{k}{def} \PY{n+nf}{svd}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{k}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} \PY{n}{epsilon}\PY{o}{=}\PY{l+m+mf}{1e\PYZhy{}10}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+        \PY{l+s+sd}{        Compute the singular value decomposition of a matrix A}
+        \PY{l+s+sd}{        using the power method. A is the input matrix, and k}
+        \PY{l+s+sd}{        is the number of singular values you wish to compute.}
+        \PY{l+s+sd}{        If k is None, this computes the full\PYZhy{}rank decomposition.}
+        \PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+            \PY{n}{A} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{float}\PY{p}{)}
+            \PY{n}{n}\PY{p}{,} \PY{n}{m} \PY{o}{=} \PY{n}{A}\PY{o}{.}\PY{n}{shape}
+            \PY{n}{svdSoFar} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{k}{if} \PY{n}{k} \PY{o+ow}{is} \PY{k+kc}{None}\PY{p}{:}
+                \PY{n}{k} \PY{o}{=} \PY{n+nb}{min}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{n}{m}\PY{p}{)}
+        
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{k}\PY{p}{)}\PY{p}{:}
+                \PY{n}{matrixFor1D} \PY{o}{=} \PY{n}{A}\PY{o}{.}\PY{n}{copy}\PY{p}{(}\PY{p}{)}
+        
+                \PY{k}{for} \PY{n}{singularValue}\PY{p}{,} \PY{n}{u}\PY{p}{,} \PY{n}{v} \PY{o+ow}{in} \PY{n}{svdSoFar}\PY{p}{[}\PY{p}{:}\PY{n}{i}\PY{p}{]}\PY{p}{:}
+                    \PY{n}{matrixFor1D} \PY{o}{\PYZhy{}}\PY{o}{=} \PY{n}{singularValue} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{outer}\PY{p}{(}\PY{n}{u}\PY{p}{,} \PY{n}{v}\PY{p}{)}
+        
+                \PY{k}{if} \PY{n}{n} \PY{o}{\PYZgt{}} \PY{n}{m}\PY{p}{:}
+                    \PY{n}{v} \PY{o}{=} \PY{n}{svd\PYZus{}1d}\PY{p}{(}\PY{n}{matrixFor1D}\PY{p}{,} \PY{n}{epsilon}\PY{o}{=}\PY{n}{epsilon}\PY{p}{)}  \PY{c+c1}{\PYZsh{} next singular vector}
+                    \PY{n}{u\PYZus{}unnormalized} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{v}\PY{p}{)}
+                    \PY{n}{sigma} \PY{o}{=} \PY{n}{norm}\PY{p}{(}\PY{n}{u\PYZus{}unnormalized}\PY{p}{)}  \PY{c+c1}{\PYZsh{} next singular value}
+                    \PY{n}{u} \PY{o}{=} \PY{n}{u\PYZus{}unnormalized} \PY{o}{/} \PY{n}{sigma}
+                \PY{k}{else}\PY{p}{:}
+                    \PY{n}{u} \PY{o}{=} \PY{n}{svd\PYZus{}1d}\PY{p}{(}\PY{n}{matrixFor1D}\PY{p}{,} \PY{n}{epsilon}\PY{o}{=}\PY{n}{epsilon}\PY{p}{)}  \PY{c+c1}{\PYZsh{} next singular vector}
+                    \PY{n}{v\PYZus{}unnormalized} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{A}\PY{o}{.}\PY{n}{T}\PY{p}{,} \PY{n}{u}\PY{p}{)}
+                    \PY{n}{sigma} \PY{o}{=} \PY{n}{norm}\PY{p}{(}\PY{n}{v\PYZus{}unnormalized}\PY{p}{)}  \PY{c+c1}{\PYZsh{} next singular value}
+                    \PY{n}{v} \PY{o}{=} \PY{n}{v\PYZus{}unnormalized} \PY{o}{/} \PY{n}{sigma}
+        
+                \PY{n}{svdSoFar}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{(}\PY{n}{sigma}\PY{p}{,} \PY{n}{u}\PY{p}{,} \PY{n}{v}\PY{p}{)}\PY{p}{)}
+        
+            \PY{n}{singularValues}\PY{p}{,} \PY{n}{us}\PY{p}{,} \PY{n}{vs} \PY{o}{=} \PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n+nb}{zip}\PY{p}{(}\PY{o}{*}\PY{n}{svdSoFar}\PY{p}{)}\PY{p}{]}
+            \PY{k}{return} \PY{n}{singularValues}\PY{p}{,} \PY{n}{us}\PY{o}{.}\PY{n}{T}\PY{p}{,} \PY{n}{vs}
+        
+        
+        \PY{k}{if} \PY{n+nv+vm}{\PYZus{}\PYZus{}name\PYZus{}\PYZus{}} \PY{o}{==} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZus{}\PYZus{}main\PYZus{}\PYZus{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}
+            \PY{n}{movieRatings} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}
+                \PY{p}{[}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{]}\PY{p}{,}
+                \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+                \PY{p}{[}\PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+                \PY{p}{[}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,}
+                \PY{p}{[}\PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+                \PY{p}{[}\PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{]}\PY{p}{,}
+                \PY{p}{[}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,}
+                \PY{p}{[}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{]}\PY{p}{,}
+            \PY{p}{]}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{float64}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        
+            \PY{c+c1}{\PYZsh{} v1 = svd\PYZus{}1d(movieRatings)}
+            \PY{c+c1}{\PYZsh{} print(v1)}
+        
+        \PY{n}{theSVD} \PY{o}{=} \PY{n}{svd}\PY{p}{(}\PY{n}{movieRatings}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{X} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{rand}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{)}
+         \PY{n}{X}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}11}]:} array([[0.90578481, 0.77611267],
+                [0.5586657 , 0.14140001]])
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}42}]:} \PY{n}{X\PYZus{}square} \PY{o}{=} \PY{n}{X}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{X\PYZus{}square}\PY{p}{)}
+         \PY{n}{X\PYZus{}square} \PY{o}{=} \PY{n}{X}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}
+         \PY{n}{prob\PYZus{}col} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{X\PYZus{}square}\PY{p}{,}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+         \PY{n}{prob\PYZus{}row} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{X\PYZus{}square}\PY{p}{,}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+         
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{prob\PYZus{}col}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{prob\PYZus{}row}\PY{p}{)}\PY{p}{)}
+         \PY{n}{prob\PYZus{}col} \PY{o}{=} \PY{n}{prob\PYZus{}col}\PY{o}{/} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{prob\PYZus{}col}\PY{p}{)}
+         \PY{n}{prob\PYZus{}row} \PY{o}{=} \PY{n}{prob\PYZus{}row}\PY{o}{/} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{prob\PYZus{}row}\PY{p}{)}
+         \PY{n}{prob\PYZus{}col\PYZus{}cumsum} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{cumsum}\PY{p}{(}\PY{n}{prob\PYZus{}col}\PY{p}{)}
+         \PY{n}{prob\PYZus{}row\PYZus{}cumsum} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{cumsum}\PY{p}{(}\PY{n}{prob\PYZus{}row}\PY{p}{)}
+             
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[[0.82044613 0.60235088]
+ [0.31210737 0.01999396]]
+1.7548983368866455
+1.754898336886645
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}28}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{prob\PYZus{}col\PYZus{}cumsum}\PY{p}{)} 
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{prob\PYZus{}row\PYZus{}cumsum}\PY{p}{)} 
+         
+         \PY{n}{prob\PYZus{}col}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[0.64536701 1.        ]
+[0.81075751 1.        ]
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}50}]:} \PY{n}{p} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{rand}\PY{p}{(}\PY{p}{)}
+         \PY{n}{p} 
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}50}]:} 0.518736990601663
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}51}]:} \PY{n}{np}\PY{o}{.}\PY{n}{where}\PY{p}{(}\PY{n}{prob\PYZus{}col\PYZus{}cumsum}\PY{o}{\PYZgt{}}\PY{o}{=}\PY{n}{p}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}51}]:} (array([0, 1]),)
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}52}]:} \PY{n}{np}\PY{o}{.}\PY{n}{where}\PY{p}{(}\PY{n}{prob\PYZus{}col\PYZus{}cumsum}\PY{o}{\PYZgt{}}\PY{o}{=}\PY{n}{p}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}52}]:} array([0, 1])
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}57}]:} \PY{n}{id\PYZus{}col} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{where}\PY{p}{(}\PY{n}{prob\PYZus{}col\PYZus{}cumsum}\PY{o}{\PYZgt{}}\PY{o}{=}\PY{n}{p}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{X}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{id\PYZus{}col}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[[0.90578481 0.77611267]
+ [0.5586657  0.14140001]]
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}23}]:} \PY{k}{def} \PY{n+nf}{columnselect}\PY{p}{(}\PY{n}{X}\PY{p}{,}\PY{n}{c}\PY{p}{,}\PY{n}{k}\PY{p}{)}\PY{p}{:}
+             \PY{n}{u}\PY{p}{,} \PY{n}{s}\PY{p}{,} \PY{n}{vt} \PY{o}{=}  \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{svd}\PY{p}{(}\PY{n}{X}\PY{p}{)}
+             \PY{n}{v\PYZus{}square} \PY{o}{=} \PY{p}{(}\PY{n}{vt}\PY{o}{.}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}
+             \PY{c+c1}{\PYZsh{}prob\PYZus{}col = np.sum(v\PYZus{}square,axis=0)}
+             \PY{n}{prob\PYZus{}row} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{v\PYZus{}square}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{p}{:}\PY{n}{k}\PY{p}{]}\PY{p}{,}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+             \PY{c+c1}{\PYZsh{}prob\PYZus{}col = prob\PYZus{}col/ np.sum(prob\PYZus{}col)}
+             \PY{n}{prob\PYZus{}row} \PY{o}{=} \PY{n}{prob\PYZus{}row}\PY{o}{/}\PY{n}{k}
+             \PY{c+c1}{\PYZsh{}prob\PYZus{}col\PYZus{}cumsum = np.cumsum(prob\PYZus{}col)}
+             \PY{n}{prob\PYZus{}row\PYZus{}cumsum} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{cumsum}\PY{p}{(}\PY{n}{prob\PYZus{}row}\PY{p}{)}
+             
+             \PY{n}{id\PYZus{}row} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n}{c}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{int}\PY{p}{)}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{c}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{p} \PY{o}{=} \PY{n}{rn}\PY{o}{.}\PY{n}{rand}\PY{p}{(}\PY{p}{)}
+                 \PY{n}{id\PYZus{}row}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{where}\PY{p}{(}\PY{n}{prob\PYZus{}row\PYZus{}cumsum}\PY{o}{\PYZgt{}}\PY{o}{=}\PY{n}{p}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+             \PY{n}{id\PYZus{}row} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{n}{id\PYZus{}row}\PY{p}{)}
+             \PY{c+c1}{\PYZsh{}print(id\PYZus{}row)}
+             \PY{n}{C} \PY{o}{=} \PY{n}{X}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{id\PYZus{}row}\PY{p}{]} \PY{c+c1}{\PYZsh{}/np.sqrt(c*c* prob\PYZus{}row[id\PYZus{}row,None])      }
+             \PY{k}{return} \PY{n}{C}
+         
+         
+         \PY{k}{def} \PY{n+nf}{CUR\PYZus{}leveragescore}\PY{p}{(}\PY{n}{X}\PY{p}{,}\PY{n}{c}\PY{p}{,}\PY{n}{r}\PY{p}{)}\PY{p}{:}
+             \PY{n}{k} \PY{o}{=} \PY{n+nb}{min}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{matrix\PYZus{}rank}\PY{p}{(}\PY{n}{X}\PY{p}{,}\PY{n}{tol}\PY{o}{=}\PY{l+m+mf}{1e\PYZhy{}3}\PY{p}{)}\PY{p}{,}\PY{n}{r}\PY{p}{)} 
+             \PY{n}{C} \PY{o}{=} \PY{n}{columnselect}\PY{p}{(}\PY{n}{X}\PY{p}{,}\PY{n}{c}\PY{p}{,}\PY{n}{k}\PY{p}{)}  
+             \PY{n}{R} \PY{o}{=} \PY{n}{columnselect}\PY{p}{(}\PY{n}{X}\PY{o}{.}\PY{n}{T}\PY{p}{,}\PY{n}{r}\PY{p}{,}\PY{n}{k}\PY{p}{)}
+             \PY{n}{R} \PY{o}{=} \PY{n}{R}\PY{o}{.}\PY{n}{T}
+             \PY{n}{U} \PY{o}{=} \PY{n}{la}\PY{o}{.}\PY{n}{pinv}\PY{p}{(}\PY{n}{C}\PY{p}{)} \PY{o}{@} \PY{n}{X} \PY{o}{@} \PY{n}{la}\PY{o}{.}\PY{n}{pinv}\PY{p}{(}\PY{n}{R}\PY{p}{)}
+             \PY{k}{return} \PY{n}{C}\PY{p}{,}\PY{n}{U}\PY{p}{,} \PY{n}{R}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{n}{C} \PY{o}{=} \PY{n}{columnselect}\PY{p}{(}\PY{n}{gray\PYZus{}img}\PY{p}{,} \PY{l+m+mi}{200}\PY{p}{,} \PY{l+m+mi}{200}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[  0   0  10  12  15  17  21  22  27  32  43  57  58  63  63  68  69  75
+  75  77  78  88  93  96 102 108 113 135 141 143 146 150 160 162 163 177
+ 178 179 191 196 197 201 205 208 216 233 236 237 240 242 244 244 254 259
+ 260 261 264 264 274 276 278 279 287 287 290 290 291 294 303 304 310 312
+ 316 318 319 319 321 323 328 329 330 335 336 340 341 349 356 356 362 367
+ 368 378 382 382 388 388 390 405 407 408 410 422 422 426 441 444 446 451
+ 452 452 457 466 468 469 469 471 473 478 483 483 483 486 486 491 492 492
+ 498 509 509 515 521 521 530 536 537 544 546 547 547 550 550 552 552 553
+ 557 559 560 562 568 581 584 584 586 592 597 603 606 608 608 619 633 635
+ 635 640 643 644 664 667 671 672 674 677 680 680 685 687 688 698 698 706
+ 715 720 721 723 724 724 728 729 740 745 748 750 753 759 763 764 764 767
+ 770 772]
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}29}]:} \PY{n}{C}\PY{p}{,}\PY{n}{U}\PY{p}{,} \PY{n}{R} \PY{o}{=} \PY{n}{CUR\PYZus{}leveragescore}\PY{p}{(}\PY{n}{gray\PYZus{}img}\PY{p}{,} \PY{l+m+mi}{50}\PY{p}{,} \PY{l+m+mi}{50}\PY{p}{)}
+         
+         
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{clf}\PY{p}{(}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{C} \PY{o}{@} \PY{n}{U} \PY{o}{@} \PY{n}{R}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+         
+         
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{L2\PYZus{}norm error }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{la}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{gray\PYZus{}img} \PY{o}{\PYZhy{}}\PY{p}{(} \PY{n}{C} \PY{o}{@} \PY{n}{U} \PY{o}{@} \PY{n}{R}\PY{p}{)}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{o}{/}\PY{n}{la}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{gray\PYZus{}img}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Nuclear\PYZus{}norm error }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{la}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{gray\PYZus{}img} \PY{o}{\PYZhy{}} \PY{p}{(}\PY{n}{C} \PY{o}{@} \PY{n}{U} \PY{o}{@} \PY{n}{R}\PY{p}{)}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{nuc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{/}\PY{n}{la}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{gray\PYZus{}img}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{nuc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Frobenius\PYZus{}norm error }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{la}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{gray\PYZus{}img} \PY{o}{\PYZhy{}} \PY{p}{(}\PY{n}{C} \PY{o}{@} \PY{n}{U} \PY{o}{@} \PY{n}{R}\PY{p}{)}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{fro}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{/}\PY{n}{la}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{gray\PYZus{}img}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{fro}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_24_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+L2\_norm error 6.3446288965111926\%
+Nuclear\_norm error 63.5530087589636\%
+Frobenius\_norm error 25.167436153915112\%
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{la}\PY{o}{.}\PY{n}{pinv}\PY{p}{(}\PY{n}{C}\PY{p}{)}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+(200, 522)
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}27}]:} \PY{c+c1}{\PYZsh{} print(la.pinv(R).shape)}
+         \PY{c+c1}{\PYZsh{} print(gray\PYZus{}img.shape)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{clf}\PY{p}{(}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{C} \PY{o}{@} \PY{n}{U} \PY{o}{@} \PY{n}{R}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+         
+         
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{L2\PYZus{}norm error }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{la}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{gray\PYZus{}img} \PY{o}{\PYZhy{}}\PY{p}{(} \PY{n}{C} \PY{o}{@} \PY{n}{U} \PY{o}{@} \PY{n}{R}\PY{p}{)}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{o}{/}\PY{n}{la}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{gray\PYZus{}img}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Nuclear\PYZus{}norm error }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{la}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{gray\PYZus{}img} \PY{o}{\PYZhy{}} \PY{p}{(}\PY{n}{C} \PY{o}{@} \PY{n}{U} \PY{o}{@} \PY{n}{R}\PY{p}{)}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{nuc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{/}\PY{n}{la}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{gray\PYZus{}img}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{nuc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Frobenius\PYZus{}norm error }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{la}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{gray\PYZus{}img} \PY{o}{\PYZhy{}} \PY{p}{(}\PY{n}{C} \PY{o}{@} \PY{n}{U} \PY{o}{@} \PY{n}{R}\PY{p}{)}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{fro}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{/}\PY{n}{la}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{gray\PYZus{}img}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{fro}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_26_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+L2\_norm error 3.540496395302669\%
+Nuclear\_norm error 45.497342160054785\%
+Frobenius\_norm error 16.17527103032783\%
+
+    \end{Verbatim}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}

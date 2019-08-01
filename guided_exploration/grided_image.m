@@ -1,12 +1,12 @@
 clc; clear all; close all;
 
 % X  = imread('26.jpg');
-
+X = imread('stain_thumbnail.png');
 
 addpath('/home/akshay/Desktop/CVC/Multi_target/Code/Multi-level_Sampling');
 addpath('/home/akshay/Desktop/Data/Biopsy');
 addpath('/home/akshay/Desktop/Data');
-X = imread('stain_thumbnail.png');
+% X = imread('stain_thumbnail.png');
 
 
 [rows, columns, numberOfColorChannels] = size(X);
@@ -28,4 +28,6 @@ for col = 1 : stepSize : columns
 end
 
 %% Rectangular ROI
-rectangle('Position', [900 750 50 50], 'EdgeColor', 'r','LineWidth',3); %// draw rectangle on image
+zoom on
+rectangle('Position', [520 230 150 150], 'EdgeColor', 'r','LineWidth',3); %// draw rectangle on image
+%rectangle('Position', [500 200 200 200], 'EdgeColor', 'g','LineWidth',3); %// draw rectangle on image

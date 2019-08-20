@@ -23,7 +23,7 @@ for i=1:l
 
 %     imtool(low_res,[]);
 %     value = sum(NC.^2)/sum(C.^2);
-    value = sumsqr(NC)/sumsqr(C);
+    value = sumsqr(NC)/sumsqr(C);   
 
     Ct=NC;
     if value < threshold

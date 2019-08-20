@@ -125,38 +125,38 @@ data = Coeff';
 for i=1:num_trials
     state = rng(i);
 
-% %% Clustering using Kmeans
-%     eva = evalclusters(data,'kmeans','CalinskiHarabasz','KList',klist);
-%     [classes_temp, centers_temp, sumd_temp, D_temp ]=kmeans(data,eva.OptimalK);
-% 
-%     
-%     loss = sum(sumd_temp);
-%     if loss < temp
-%         temp = loss;
-%         state_save = state;
-%         classes = classes_temp; 
-%         centers = centers_temp;
-%         sumd = sumd_temp;
-%         D = D_temp;
-%         eva_save = eva;
-%     end  
+%% Clustering using Kmeans
+    eva = evalclusters(data,'kmeans','CalinskiHarabasz','KList',klist);
+    [classes_temp, centers_temp, sumd_temp, D_temp ]=kmeans(data,eva.OptimalK);
 
-%% Clustering using GMM
-    eva = evalclusters(data,'gmdistribution','gap','KList',klist);
-    gmm = fitgmdist(data,eva.OptimalK,'SharedCovariance',true);
-    [classes_temp, nlogL_temp, P_temp,logpdf_temp, D_temp ]=cluster(gmm,data);   
-    state_save = state;
-    classes = classes_temp; 
-    D = D_temp;
-    eva_save = eva;
-    loss = nlogL_temp;
+    
+    loss = sum(sumd_temp);
     if loss < temp
         temp = loss;
         state_save = state;
         classes = classes_temp; 
+        centers = centers_temp;
+        sumd = sumd_temp;
         D = D_temp;
         eva_save = eva;
-    end 
+    end  
+
+% %% Clustering using GMM
+%     eva = evalclusters(data,'gmdistribution','gap','KList',klist);
+%     gmm = fitgmdist(data,eva.OptimalK,'SharedCovariance',true);
+%     [classes_temp, nlogL_temp, P_temp,logpdf_temp, D_temp ]=cluster(gmm,data);   
+%     state_save = state;
+%     classes = classes_temp; 
+%     D = D_temp;
+%     eva_save = eva;
+%     loss = nlogL_temp;
+%     if loss < temp
+%         temp = loss;
+%         state_save = state;
+%         classes = classes_temp; 
+%         D = D_temp;
+%         eva_save = eva;
+%     end 
 
  
 end
